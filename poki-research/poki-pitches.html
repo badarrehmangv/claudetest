@@ -1,0 +1,278 @@
+<title>Poki Game Pitches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column (~72ch) with full-width data tables and a pitch card stack; thumbs-vote "meter" motif echoes Poki's rating system. */
+:root {
+  --bg: #f4f6fb; --surface: #ffffff; --ink: #151a2d; --muted: #5a6178; --line: #dde2ee;
+  --accent: #e8590c; --accent-soft: #fff0e6; --good: #1f8a5b; --good-soft: #e6f5ee; --bad: #c2334d; --bad-soft: #fcebee; --warn: #9a6a00; --warn-soft: #fdf4dc;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #10131f; --surface: #181c2c; --ink: #e9ecf5; --muted: #a2a9c0; --line: #2c3248;
+  --accent: #ff8a3d; --accent-soft: #3a2415; --good: #4cc790; --good-soft: #17301f; --bad: #ff7d93; --bad-soft: #3a1a22; --warn: #f0c24d; --warn-soft: #362c12; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #10131f; --surface: #181c2c; --ink: #e9ecf5; --muted: #a2a9c0; --line: #2c3248;
+  --accent: #ff8a3d; --accent-soft: #3a2415; --good: #4cc790; --good-soft: #17301f; --bad: #ff7d93; --bad-soft: #3a1a22; --warn: #f0c24d; --warn-soft: #362c12; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--body); margin: 0 }
+.wrap { max-width: 60rem; margin: 0 auto; padding-inline: 16px; padding-block: 2.5rem 4rem }
+.col { max-width: 44rem }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(2.1rem, 5vw, 3.1rem); font-weight: 800; letter-spacing: -0.02em }
+h2 { font-size: 1.65rem; font-weight: 700; margin-top: 3rem; padding-top: 1.25rem; border-top: 2px solid var(--ink) }
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 1.6rem }
+p { margin: 0.7rem 0 }
+ul { margin: 0.6rem 0; padding-left: 1.2rem }
+li { margin: 0.3rem 0 }
+a { color: var(--accent); text-underline-offset: 2px }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.eyebrow { font: 500 0.78rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent) }
+.lede { font-size: 1.2rem; color: var(--muted); margin-top: 1rem }
+.meta { font: 500 0.8rem/1.4 var(--mono); color: var(--muted); margin-top: 1rem }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.92em }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 1rem 1.2rem; margin: 1.4rem 0 }
+.callout strong { font-family: var(--display) }
+.tablebox { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface) }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem }
+th, td { text-align: left; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font: 700 0.78rem/1.3 var(--body); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: var(--bg) }
+tr:last-child td { border-bottom: 0 }
+td.r, th.r { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap }
+.chip { display: inline-block; font: 700 0.72rem/1 var(--body); padding: 0.28rem 0.5rem; border-radius: 999px; white-space: nowrap }
+.chip.good { background: var(--good-soft); color: var(--good) }
+.chip.bad { background: var(--bad-soft); color: var(--bad) }
+.chip.warn { background: var(--warn-soft); color: var(--warn) }
+.pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; margin: 1.2rem 0; padding: 0; list-style: none; counter-reset: step }
+.pipeline li { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem; margin: 0; counter-increment: step; min-width: 0 }
+.pipeline li::before { content: counter(step); font: 500 0.75rem/1 var(--mono); color: var(--accent); display: block; margin-bottom: 0.35rem }
+.pipeline b { font-family: var(--display); display: block; font-size: 1rem }
+.pipeline span { font-size: 0.86rem; color: var(--muted); display: block; margin-top: 0.25rem }
+.pitch { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.3rem 1.4rem; margin: 1.4rem 0 }
+.pitch header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1rem; justify-content: space-between }
+.pitch h3 { margin: 0; font-size: 1.5rem }
+.pitch .rank { font: 500 0.78rem/1 var(--mono); color: var(--muted) }
+.pitch .hook { font-size: 1.1rem; margin: 0.6rem 0 0.9rem; color: var(--ink) }
+.pitch dl { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0.45rem 1rem; margin: 0 }
+.pitch dt { font: 700 0.78rem/1.5 var(--body); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding-top: 0.12rem }
+.pitch dd { margin: 0; min-width: 0 }
+.scores { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem }
+@media (max-width: 34rem) { .pitch dl { grid-template-columns: 1fr } .pitch dt { padding-top: 0.5rem } }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin: 1rem 0 }
+.two > div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.1rem; min-width: 0 }
+.two h3 { margin-top: 0 }
+details { margin: 0.6rem 0 }
+summary { cursor: pointer; font-weight: 700 }
+.small { font-size: 0.9rem; color: var(--muted) }
+.sources li { font-size: 0.9rem; overflow-wrap: anywhere }
+</style>
+
+<div class="wrap">
+  <div class="col">
+    <p class="eyebrow">Poki research · 29 Sep 2026</p>
+    <h1>What to build for Poki</h1>
+    <p class="lede">How Poki accepts games, what the whole live catalogue says about what wins, what Blumgi and AJ Ordaz show, and five game pitches ranked by how likely they are to get in and do well.</p>
+    <p class="meta">Based on: data from all 1,503 live Poki games (pulled today), 44 Poki developer-docs pages, 33 Poki blog posts, Blumgi's blog, developer case studies, and measured download sizes for 74 games.</p>
+  </div>
+
+  <div class="callout col">
+    <strong>Bottom line.</strong> Poki accepts games on player data, not on the pitch. You need 3+ minutes average playtime, a strong thumbnail click rate and fast loading. The final review then declines anything that overlaps too much with what's already there. Games that combine <b>ragdoll or physics comedy</b>, a <b>2-player or online mode</b>, <b>3D or sports</b> and <b>dress-up or makeover</b> beat the median. Puzzle, merge, idle and match-3 games lose. My top recommendation is <b>Dodge Flop</b>, a ragdoll dodgeball game: it stacks four winning traits in a niche with zero games on Poki today. Build it and one cheap backup (<b>Sneaker Spa</b>) as 2-week prototypes, then let Poki's free playtests pick the winner.
+  </div>
+
+  <h2>How a game gets onto Poki</h2>
+  <div class="col">
+    <p>Every game is hand-picked, and Poki keeps daily releases limited. About <span class="num">4–5</span> games go live globally each week (<span class="num">197</span> so far in 2026). The route is fixed, and each gate is a metric:</p>
+  </div>
+  <ol class="pipeline">
+    <li><b>Apply &amp; upload</b><span>The access form asks for links to games you've already released. Builds can be prototypes.</span></li>
+    <li><b>Playtests</b><span>Free and unlimited. 10 video recordings each, with inputs and console output.</span></li>
+    <li><b>Player fit test</b><span>500 players, about 5 h. Pass: <b>3+ min average</b> and <b>25%+ of plays over 3 min</b>.</span></li>
+    <li><b>Web fit test</b><span>About 10k players, about 7 days. Click rate, time on page and share who start playing, each scored against the category average.</span></li>
+    <li><b>Final review</b><span>1–2 weeks. Checks quality, originality and overlap with existing games. A no is final for that game.</span></li>
+    <li><b>Soft → global release</b><span>About 2–3 months. QA, then 2–3 weeks on category pages only, then about 2 weeks of homepage push.</span></li>
+  </ol>
+  <div class="col">
+    <p><b>Targets, not just minimums:</b> 5+ min average playtime (10+ for management/sim games) and 65%+ of visitors starting to play. The average Poki game gets <span class="num">~70%</span> to start and <span class="num">6+ min</span>. Unity games "typically land around 60 to 65%" because of build weight.</p>
+    <p><b>Why games get declined:</b> clones; games that feel "heavily tool-assisted or rapidly assembled"; anything "even slightly shocking"; and "the portfolio is covered", meaning too much overlap in its categories. "Adds to diversity" means "a mechanic, setting, or angle not already well-represented on Poki, not just a variation on an existing hit." Trend games (brainrot etc.) must add real gameplay, not just meme visuals.</p>
+    <p><b>Hard requirements:</b> runs on mobile and desktop; <b>works in portrait</b> ("our QA team tests for it"); instant start with no text tutorials; small download ("every extra megabyte… lose a couple percent"); Poki SDK events; no external links. Stickman Hook went from 40 MB and 50% of visitors starting to play to 6 MB and 72%.</p>
+    <p><b>Deal:</b> web exclusivity for 5 years by default (Steam and app stores stay open). Revenue from players Poki brings is shared; players you bring yourself pay you 100%. Money comes mostly from rewarded ads. Sourced figures range from "close to six figures" for a solo developer with two games up to "$1M+ over 12 months" for a category leader (Drive Mad).</p>
+  </div>
+
+  <h2>What the catalogue says wins</h2>
+  <div class="col">
+    <p>Poki shows thumbs-up and thumbs-down counts on every game. I used total votes as a rough measure of player volume, and <b>votes per day since release</b> as a measure of current pull. It's noisy (plays per vote vary 20–350×), so treat only gaps of about 2× or more as real. A typical 2025–26 release gets a median of <span class="num">~128</span> votes/day; the top 10% get <span class="num">874+</span>. The top 10% of recent games hold 57% of recent votes.</p>
+  </div>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Trait (2025–26 releases)</th><th class="r">Median votes/day</th><th>Verdict</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>Stickman</td><td class="r">~400</td><td><span class="chip good">Strong</span></td><td>Holds after removing brands and top studios.</td></tr>
+        <tr><td>Ragdoll / physics comedy</td><td class="r">~298</td><td><span class="chip good">Strong</span></td><td>13 different developers, so it isn't one studio's streak.</td></tr>
+        <tr><td>2-player</td><td class="r">~263</td><td><span class="chip good">Strong</span></td><td>19 developers. Social tags are 15% of releases but 28% of the top quarter.</td></tr>
+        <tr><td>Sports</td><td class="r">250–325</td><td><span class="chip good">Strong</span></td><td>Partly lifted by the 2026 World Cup (soccer).</td></tr>
+        <tr><td>Dress-up / fashion / beauty</td><td class="r">185–280</td><td><span class="chip good">Strong</span></td><td>Strongest theme after controlling for other traits (×2.06). Poki asked developers for dress-up games.</td></tr>
+        <tr><td>3D</td><td class="r">196 vs 101</td><td><span class="chip good">Strong</span></td><td>Holds in every age band, but 3D's share of new releases rose from 17% to 30%.</td></tr>
+        <tr><td>.io / real-time online</td><td class="r">~600+</td><td><span class="chip warn">Strong, small n</span></td><td>Only 6–7 recent games. Needs servers or bots.</td></tr>
+        <tr><td>Simulation / tycoon</td><td class="r">~136</td><td><span class="chip warn">Average</span></td><td>The largest genre by releases (17%). Supply is rising; the hit rate isn't.</td></tr>
+        <tr><td>Idle</td><td class="r">~65</td><td><span class="chip bad">Weak</span></td><td>Also named a poor fit by a developer who was rejected 9 times.</td></tr>
+        <tr><td>Puzzle</td><td class="r">~33</td><td><span class="chip bad">Weak</span></td><td>On 21% of releases, but only 2 of the top 60 homepage slots.</td></tr>
+        <tr><td>Merge</td><td class="r">~27</td><td><span class="chip bad">Weak</span></td><td>On 10% of releases; only 1 merge game in the all-time top 100.</td></tr>
+        <tr><td>Match-3</td><td class="r">~11</td><td><span class="chip bad">Weak</span></td><td>Even Subway Surfers' match-3 spin-off has only 16k votes.</td></tr>
+        <tr><td>Desktop-only</td><td class="r">~12</td><td><span class="chip bad">Avoid</span></td><td>Legacy niche. 88% of 2026 releases support both orientations.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <ul>
+      <li><b>Poki promotes new games that perform.</b> 30 of the top 60 homepage slots are 2025–26 releases.</li>
+      <li><b>Big-brand mobile ports raise the floor but don't own the chart.</b> Voodoo, Outfit7, Fingersoft and others take 7 of the top 20 recent games, but only 11 of the top 60.</li>
+      <li><b>Studios with 2–9 games do best.</b> First games perform about average but rarely become the biggest hits: 12 studios hold 28 of the top 60 recent slots. Plan a series, not one shot.</li>
+      <li><b>80% thumbs-up is the quality floor.</b> Poki's star rating is just 1 + 4 × the thumbs-up share, so 4.2 stars means 80% up. 54 of the top 60 recent games are above that.</li>
+      <li><b>Keep updating after launch.</b> Top-60 games were updated a median of 77 days ago, against 196 days for the rest. Vortella's Dress Up earned its big homepage tile three months after launch, through updates.</li>
+    </ul>
+  </div>
+
+  <h3>Download size by engine (measured today, first load)</h3>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Engine</th><th class="r">Games</th><th class="r">Median MB</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>Construct 3</td><td class="r">15</td><td class="r">3.0</td><td>All Blumgi games (1.1–3.8 MB); AJ Ordaz's original Pretty Odd Bunny is the outlier at 25.5 MB</td></tr>
+        <tr><td>Custom / Emscripten</td><td class="r">12</td><td class="r">4.0</td><td>Drive Mad 3.7, Plonky 2.6, Vortella's 4.9</td></tr>
+        <tr><td>PlayCanvas</td><td class="r">4</td><td class="r">3.8</td><td>Slice Master 4.3, Hide and Paint 3.3 (both 3D hits)</td></tr>
+        <tr><td>Defold</td><td class="r">2</td><td class="r">8.2</td><td>Level Devil 5.9, Monkey Mart 10.6</td></tr>
+        <tr><td>Unity</td><td class="r">21</td><td class="r">23.0</td><td>Mostly big-publisher ports: Hole.io 29.7, Tank Stars 48.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small col">For a small team: Construct 3 for 2D, and PlayCanvas, Three.js or Defold for 3D. Aim for under 5 MB. Unity works, but you pay for it in the share of visitors who start playing.</p>
+
+  <h2>Blumgi and AJ Ordaz</h2>
+  <div class="two">
+    <div>
+      <h3>Blumgi (Loïc Roger, solo, France)</h3>
+      <p class="small">Co-creator of Stickman Hook. 13 games, <span class="num">4.1M</span> votes, median <span class="num">225k</span> votes per game; ranked #23 of 434 developers.</p>
+      <ul>
+        <li><b>One verb:</b> hold to charge, release on a physics body. 8 of his 13 games use it, and those do about 2× better than his others.</li>
+        <li>About <b>100 short levels</b> (roughly 1 hour), flat bright 2D art with one mascot, "No stories, intros, or complex menus".</li>
+        <li>A local 2-player mode where the verb maps to one key per player (5 of 13 games).</li>
+        <li>Construct 3 builds of 1–4 MB, portrait and landscape. A new game every ~4.6 months.</li>
+        <li>His hits are Slime (1.03M votes) and Rocket (911k). The recent ones are weaker: Splash is his worst by current pull. Even the best miss sometimes.</li>
+        <li>He killed a year-long project (Blumgi Chase) because it had no pre-production and its scope doubled. His rule: prototype in about a week and cut fast.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>AJ Ordaz (solo, Construct 3)</h3>
+      <p class="small">8 Poki games, <span class="num">218k</span> votes in total, median <span class="num">16k</span> per game; ranked #191. A useful "what not to do" as much as "what to do".</p>
+      <ul>
+        <li><b>Premium-style platformers made mid-tier numbers:</b> the Pretty Odd Bunny games have 71k and 65k votes. Nekopirate, a story-driven action platformer, is his self-described "big flop" (8k votes).</li>
+        <li><b>Poki-native ideas did better per day:</b> A Cleaning Story (no fail state, tap to scrub) was his "best launch ever". Trapped in the Dollhouse, a cute-creepy, mouse-only escape game, is his best by current pull (352/day, about 2× a typical game).</li>
+        <li>His own lesson: build what Poki players want, not what you want to make.</li>
+        <li>Veggie Merge (June 2026) has only 1.6k votes, which fits the data on merge games.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small col">What to take from both: simple input, instant fun, bright art, both orientations, small builds, many small bets. What not to copy: Blumgi's occupied combinations (a hold-to-jump slime, grappling swings, basketball or soccer physics puzzles, cars with a boost, knocking enemies into water, rope cutting, paint-the-arena). Poki can decline those as overlap.</p>
+
+  <h2>Five pitches, ranked</h2>
+  <p class="col">Ranked by chance of acceptance × expected pull ÷ build cost. I assumed a small team (1–4 people) building for 2–4 months. Every pitch's niche was checked against the 1,503 live games.</p>
+
+  <article class="pitch">
+    <header><h3>1 · Dodge Flop</h3><span class="rank">Ragdoll sports · 2-player · 3D-lite</span></header>
+    <p class="hook">Ragdoll dodgeball. Hold to wind up a throw, release to fling. Get hit and you flop across the court in slow motion.</p>
+    <dl>
+      <dt>Why it wins</dt><dd>It stacks four of the strongest traits: ragdoll (~298/day), 2-player (~263/day), sports (250–325/day) and stickman-style characters. There are <b>zero dodgeball games on Poki</b>, so it clearly "adds to diversity".</dd>
+      <dt>Core loop</dt><dd>60–90 second rounds, best of 5. Catch a ball to bring a teammate back. Solo play runs a bot tournament ladder, so it clears the 3-minute gate without a friend. Same-keyboard 2-player uses one key per player. Unlock arenas and silly outfits, with rewarded ads for cosmetics.</dd>
+      <dt>Controls</dt><dd>One button (hold and release). Movement and dodging come from timing and auto-positioning. Tap on mobile; works in portrait and landscape.</dd>
+      <dt>Build</dt><dd>PlayCanvas or Three.js low-poly 3D, or Construct with 2D ragdolls. Under 5 MB. About 8–12 weeks. Online mode later, with Poki's multiplayer library plus bots.</dd>
+      <dt>Risks</dt><dd>Ragdoll 2-player is well supplied (Rooftop Snipers-style games, 37 same-keyboard titles), so the dodgeball rules must feel new, not reskinned. Physics tuning takes time.</dd>
+      <dt>Scores</dt><dd class="scores"><span class="chip good">Acceptance: high</span><span class="chip good">Upside: high</span><span class="chip warn">Cost: medium</span></dd>
+    </dl>
+  </article>
+
+  <article class="pitch">
+    <header><h3>2 · Sneaker Spa</h3><span class="rank">Makeover · satisfying cleaning · mouse or tap</span></header>
+    <p class="hook">Customers bring you trashed sneakers. Scrub, wash and restore them, then design them with paint, laces and stickers, and watch the customer react.</p>
+    <dl>
+      <dt>Why it wins</dt><dd>It combines the strongest theme (dress-up/makeover, ×2.06) with the cleaning trend. Robo Cleaner Simulator is #2 on today's homepage (1,105/day), Beauty Salon gets 1,349/day, Phone CASE DIY 1,717/day, and A Cleaning Story was AJ's best launch. <b>No sneaker game exists on Poki.</b></dd>
+      <dt>Core loop</dt><dd>Clean (no fail state) → customise → rate → earn money for tools and designs. Run a tiny shop you walk around in, based on Vortella's lesson that players "wanted to control a character that runs around in a little world". Later: a design contest where players vote.</dd>
+      <dt>Controls</dt><dd>Click or tap and drag only. Portrait-first.</dd>
+      <dt>Build</dt><dd>Construct 3 or custom 2D. 2–3 MB. About 6–10 weeks. Mostly art, with light code.</dd>
+      <dt>Risks</dt><dd>Makeover games are growing fast (WeLoPlay alone has several), so the restore-then-design twist has to carry it. Simulation-style loops need 10+ minutes of playtime to count as good.</dd>
+      <dt>Scores</dt><dd class="scores"><span class="chip good">Acceptance: high</span><span class="chip warn">Upside: medium–high</span><span class="chip good">Cost: low</span></dd>
+    </dl>
+  </article>
+
+  <article class="pitch">
+    <header><h3>3 · Puff</h3><span class="rank">Blumgi-style one-verb physics · 100 levels</span></header>
+    <p class="hook">You're a pufferfish. Hold to inflate (float up, bounce off spikes), release to deflate (sink, squeeze through gaps). Reach the shell.</p>
+    <dl>
+      <dt>Why it wins</dt><dd>It follows Blumgi's proven recipe with a verb nobody uses: only one Poki game mentions inflating anything. It is cheap, readable in one second, identical on mouse, touch and keyboard, and easy to add a 2-player race to.</dd>
+      <dt>Core loop</dt><dd>About 100 short levels, with a new element every few levels (currents, bubbles, eels). Unlock a new sea creature every 10 levels. Local 2-player race.</dd>
+      <dt>Controls</dt><dd>One button: hold or release.</dd>
+      <dt>Build</dt><dd>Construct 3, flat vector art, about 2 MB, about 6–8 weeks. It suits your first Poki game, because it's the cheapest route through the playtest pipeline.</dd>
+      <dt>Risks</dt><dd>One-button games usually do poorly (a typical one scores about 0.6× the norm) and are carried by rare outliers. The feel has to be excellent. Its upside is lower than pitches 1 and 4.</dd>
+      <dt>Scores</dt><dd class="scores"><span class="chip good">Acceptance: medium–high</span><span class="chip warn">Upside: medium</span><span class="chip good">Cost: low</span></dd>
+    </dl>
+  </article>
+
+  <article class="pitch">
+    <header><h3>4 · Prop Party</h3><span class="rank">3D online · hide and seek · .io</span></header>
+    <p class="hook">Online prop hunt in a giant kid's bedroom. Hiders turn into toys, lamps and socks; seekers bonk anything suspicious.</p>
+    <dl>
+      <dt>Why it wins</dt><dd>It has the highest upside: .io and online games have the strongest pull (~600+/day), 3D is robust, and Hide and Paint (1 of 16 hide-and-seek games) has 2,975/day as a 2026 release. <b>No prop-hunt game exists on Poki.</b></dd>
+      <dt>Core loop</dt><dd>3-minute rounds, swapping roles each round. Bots fill lobbies, which Poki recommends for the web fit test. Unlock new maps and prop sets.</dd>
+      <dt>Controls</dt><dd>WASD plus mouse and one action key; on-screen joystick on mobile.</dd>
+      <dt>Build</dt><dd>PlayCanvas or Three.js with Poki's multiplayer library. Under 6 MB. About 3–5 months. Needs someone with netcode and bot experience.</dd>
+      <dt>Risks</dt><dd>It's close to Hide and Paint's "blend in" fantasy, so Poki could call that category covered. Ask Poki early. Online games have the highest cost and failure risk.</dd>
+      <dt>Scores</dt><dd class="scores"><span class="chip warn">Acceptance: medium</span><span class="chip good">Upside: very high</span><span class="chip bad">Cost: high</span></dd>
+    </dl>
+  </article>
+
+  <article class="pitch">
+    <header><h3>5 · Hamster Heist</h3><span class="rank">Cute-creepy escape · funny fails · mouse or tap</span></header>
+    <p class="hook">A class hamster escapes the school at night. At each obstacle, pick one of three tools. Most choices fail in funny ways; one works.</p>
+    <dl>
+      <dt>Why it wins</dt><dd>Choice-based escape games with funny fails are all-time Poki giants: Escaping the Prison has 3.26M votes and Fleeing the Complex 2.4M. AJ's cute-creepy dollhouse escape is his best by current pull. <b>No hamster game exists on Poki.</b></dd>
+      <dt>Core loop</dt><dd>Branching choices with a fail gag for each wrong one. 20–40 minutes of chapters, with a mildly spooky janitor. Collect every fail to fill an album, which drives replays.</dd>
+      <dt>Controls</dt><dd>Tap only, in both orientations.</dd>
+      <dt>Build</dt><dd>2D animation-heavy (Construct or Spine). About 3–4 MB and about 8–12 weeks. Animation is the main cost.</dd>
+      <dt>Risks</dt><dd>It must not feel like a Henry Stickmin clone: its own world, humour and art. Keep the scares mild (Poki avoids anything "even slightly shocking"). The horror sample is small (n=8). Narrative games are weak unless the choices are the fun.</dd>
+      <dt>Scores</dt><dd class="scores"><span class="chip warn">Acceptance: medium</span><span class="chip warn">Upside: medium–high</span><span class="chip warn">Cost: medium</span></dd>
+    </dl>
+  </article>
+
+  <h2>Next steps</h2>
+  <div class="col">
+    <ol>
+      <li><b>Apply for Poki for Developers now.</b> The form asks for links to games you've already released, so gather them.</li>
+      <li><b>Week 1–2:</b> build rough prototypes of Dodge Flop and Sneaker Spa, portrait-ready and under 5 MB, with the SDK's gameplayStart/Stop events in.</li>
+      <li><b>Week 3:</b> run Poki playtests (free, results in minutes). Keep going only if at least 3 of 10 players pass 3 minutes and at least 1 passes 10 minutes (a go/no-go rule from Kuyi Mobile, a studio that got in after 9 rejections).</li>
+      <li><b>Week 4+:</b> iterate one metric at a time until you reach 3+ min average and 25%+ over 3 min in the player fit test. Then run the web fit test with a strong static thumbnail.</li>
+      <li>After global release, update every few weeks. Start the next game in the same brand, the way Blumgi builds a catalogue of linked games.</li>
+    </ol>
+  </div>
+
+  <h2>Method and limits</h2>
+  <div class="col">
+    <details>
+      <summary>How this was made</summary>
+      <p>The embedded data (votes, release date, categories, controls, orientation) was pulled today from all 1,503 game pages on poki.com. Six analysts worked from it and from the downloaded sources. An independent checker recomputed the catalogue numbers and corrected several of them: the soccer, obby and horror signals were downgraded, and the "rating" formula was confirmed. Download sizes are what loaded in headless Chromium within about 60 seconds without clicking, so they're a lower bound for games that load more after starting.</p>
+      <p><b>Limits:</b> votes are not plays. 2019-03-11 is a bulk migration date for old games. The AJ Ordaz video had no readable transcript, so its lessons come from the description and his game pages. Reddit and Medium were blocked. Poki publishes no acceptance rate and no age or gender data. The pitches are my judgement built on this evidence, not tested concepts.</p>
+    </details>
+    <details>
+      <summary>Main sources</summary>
+      <ul class="sources">
+        <li><a href="https://developers.poki.com/guide/how-testing-works">developers.poki.com/guide/how-testing-works</a>, <a href="https://developers.poki.com/guide/player-fit-test">player-fit-test</a>, <a href="https://developers.poki.com/guide/web-fit-test">web-fit-test</a>, <a href="https://developers.poki.com/guide/reading-results">reading-results</a>, <a href="https://developers.poki.com/guide/content-player-safety">content-player-safety</a>, <a href="https://developers.poki.com/guide/release-process">release-process</a>, <a href="https://developers.poki.com/guide/revenue-deal-types">revenue-deal-types</a></li>
+        <li><a href="https://poki.com/blog/building-web-browser-games-2026">Building web browser games in 2026</a> · <a href="https://poki.com/blog/what-makes-high-quality-browser-game">What makes a high-quality browser game</a> · <a href="https://poki.com/blog/state-of-web-gaming-report-2026">State of Web Gaming 2026</a> · <a href="https://poki.com/blog/2025-at-poki-a-year-in-review">2025 year in review</a></li>
+        <li><a href="https://poki.com/blog/i-quit-my-job-to-make-a-dress-up-web-game-and-it-blew-up">Vortella's Dress Up story</a> · <a href="https://poki.com/blog/how-we-made-cannon-clash-load-fast-and-boosted-conversion">Cannon Clash load time</a> · <a href="https://poki.com/blog/game-intelligence-car-games">Car games report</a></li>
+        <li><a href="https://poki.com/blog/developer-spotlight-blumgi-games-part-1">Blumgi spotlight 1</a> · <a href="https://poki.com/blog/developer-spotlight-blumgi-games-part-2">2</a> · <a href="https://blumgi.games/ive-killed-my-first-blumgi-game/">blumgi.games</a> · <a href="https://poki.com/blog/blumgi-my-journey-on-the-web-how-i-reached-100m-players-in-2-years-as-an-indie-game-developer">100M players in 2 years</a></li>
+        <li><a href="https://www.youtube.com/watch?v=Ym_1UrzF2Us">AJ Ordaz: 3 Games in 6 Months</a> · <a href="https://poki.com/en/g/trapped-in-the-dollhouse">Trapped in the Dollhouse</a> · <a href="https://poki.com/en/g/a-cleaning-story">A Cleaning Story</a></li>
+        <li><a href="https://defold.com/2026/02/17/Creator-Spotlight-Kuyi-Mobile/">Kuyi Mobile spotlight</a> · <a href="https://kuyimobile.substack.com/p/my-game-production-process-and-how">Kuyi production process</a> · <a href="https://defold.com/2026/04/02/Creator-Spotlight-Orenji-Spark/">Orenji Spark</a> · <a href="https://mobidictum.com/pokis-web-gaming-interview-michiel-van-amerongen/">Poki co-founder interview</a></li>
+      </ul>
+    </details>
+  </div>
+</div>
